@@ -10,7 +10,7 @@ license = "Apache-2.0"
 readme = "README.md"
 description = "simple jvmti library"
 categories = ["api-bindings"]
-documentation = ""
+documentation = "https://docs.rs/simple_jvmti/latest/simple_jvmti"
 keywords = ["jvmti", "jvm", "java", "java-agent", "jni"]
 
 # https://substrate.stackexchange.com/questions/9011/warning-some-crates-are-on-edition-2021-which-defaults-to-resolver-2
