@@ -3,15 +3,15 @@ name = "simple_jvmti"
 version = "0.1.0"
 authors = ["Helly Guo <hellyguo@foxmail.com>"]
 edition = "2021"
-exclude = ["tests", "test_data", "benches", "examples", ".vscode"]
-homepage = "https://simple-jvmti.itcraft.cn"
-repository = "https://github.com/itcraft-cn/simple-jvmti"
+exclude = []
+homepage = "https://simple_jvmti.itcraft.cn"
+repository = "https://github.com/itcraft-cn/simple_jvmti"
 license = "Apache-2.0"
 readme = "README.md"
-description = ""
-categories = [""]
+description = "simple jvmti library"
+categories = ["api-bindings"]
 documentation = ""
-keywords = ["jvmti", "java", "java-agent", "jni"]
+keywords = ["jvmti", "jvm", "java", "java-agent", "jni"]
 
 # https://substrate.stackexchange.com/questions/9011/warning-some-crates-are-on-edition-2021-which-defaults-to-resolver-2
 resolver = "2"
