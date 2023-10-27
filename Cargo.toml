@@ -1,0 +1,51 @@
+[package]
+name = "simple-jvmti"
+version = "0.1.0"
+authors = ["Helly Guo <hellyguo@foxmail.com>"]
+edition = "2021"
+exclude = ["tests", "test_data", "benches", "examples", ".vscode"]
+homepage = "https://simple-jvmti.itcraft.cn"
+repository = "https://github.com/itcraft-cn/simple-jvmti"
+license = "Apache-2.0"
+readme = "README.md"
+description = ""
+categories = [""]
+documentation = ""
+keywords = ["jvmti", "java", "java-agent", "jni"]
+
+# https://substrate.stackexchange.com/questions/9011/warning-some-crates-are-on-edition-2021-which-defaults-to-resolver-2
+resolver = "2"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["dylib", "rlib"]
+
+[dependencies]
+jvmti = "0.5.0"
+jni = "0.21.1"
+thiserror = "1.0.50"
+
+[dev-dependencies]
+
+[profile.release]
+opt-level = 3
+debug = false
+debug-assertions = false
+overflow-checks = false
+lto = true
+panic = 'abort'
+incremental = false
+codegen-units = 16
+rpath = false
+
+[profile.dev]
+opt-level = 0
+debug = true
+debug-assertions = true
+overflow-checks = true
+lto = false
+panic = 'unwind'
+incremental = true
+codegen-units = 256
+rpath = false

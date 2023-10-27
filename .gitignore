@@ -1,0 +1,7 @@
+# dir
+/target
+/Cargo.lock
+
+# file
+*.log
+/core
