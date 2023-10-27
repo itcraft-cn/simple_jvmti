@@ -108,55 +108,71 @@ pub enum JvmtiError {
 impl From<&jvmtiError> for JvmtiError {
     fn from(error: &jvmtiError) -> Self {
         match error {
-            jvmtiError::JVMTI_ERROR_NONE => { panic!("This should not happen!") }
-            jvmtiError::JVMTI_ERROR_INVALID_THREAD => { JvmtiError::InvalidThread }
-            jvmtiError::JVMTI_ERROR_INVALID_THREAD_GROUP => { JvmtiError::InvalidThreadGroup }
-            jvmtiError::JVMTI_ERROR_INVALID_PRIORITY => { JvmtiError::InvalidPriority }
-            jvmtiError::JVMTI_ERROR_THREAD_NOT_SUSPENDED => { JvmtiError::ThreadNotSuspended }
-            jvmtiError::JVMTI_ERROR_THREAD_SUSPENDED => { JvmtiError::ThreadSuspended }
-            jvmtiError::JVMTI_ERROR_THREAD_NOT_ALIVE => { JvmtiError::ThreadNotAlive }
-            jvmtiError::JVMTI_ERROR_INVALID_OBJECT => { JvmtiError::InvalidObject }
-            jvmtiError::JVMTI_ERROR_INVALID_CLASS => { JvmtiError::InvalidClass }
-            jvmtiError::JVMTI_ERROR_CLASS_NOT_PREPARED => { JvmtiError::ClassNotPrepared }
-            jvmtiError::JVMTI_ERROR_INVALID_METHODID => { JvmtiError::InvalidMethodid }
-            jvmtiError::JVMTI_ERROR_INVALID_LOCATION => { JvmtiError::InvalidLocation }
-            jvmtiError::JVMTI_ERROR_INVALID_FIELDID => { JvmtiError::InvalidFieldid }
-            jvmtiError::JVMTI_ERROR_NO_MORE_FRAMES => { JvmtiError::NoMoreFrames }
-            jvmtiError::JVMTI_ERROR_OPAQUE_FRAME => { JvmtiError::OpaqueFrame }
-            jvmtiError::JVMTI_ERROR_TYPE_MISMATCH => { JvmtiError::TypeMismatch }
-            jvmtiError::JVMTI_ERROR_INVALID_SLOT => { JvmtiError::InvalidSlot }
-            jvmtiError::JVMTI_ERROR_DUPLICATE => { JvmtiError::Duplicate }
-            jvmtiError::JVMTI_ERROR_NOT_FOUND => { JvmtiError::NotFound }
-            jvmtiError::JVMTI_ERROR_INVALID_MONITOR => { JvmtiError::InvalidMonitor }
-            jvmtiError::JVMTI_ERROR_NOT_MONITOR_OWNER => { JvmtiError::NotMonitorOwner }
-            jvmtiError::JVMTI_ERROR_INTERRUPT => { JvmtiError::Interrupt }
-            jvmtiError::JVMTI_ERROR_INVALID_CLASS_FORMAT => { JvmtiError::InvalidClassFormat }
-            jvmtiError::JVMTI_ERROR_CIRCULAR_CLASS_DEFINITION => { JvmtiError::CircularClassDefinition }
-            jvmtiError::JVMTI_ERROR_FAILS_VERIFICATION => { JvmtiError::FailsVerification }
-            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_METHOD_ADDED => { JvmtiError::UnsupportedRedefinitionMethodAdded }
-            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_SCHEMA_CHANGED => { JvmtiError::UnsupportedRedefinitionSchemaChanged }
-            jvmtiError::JVMTI_ERROR_INVALID_TYPESTATE => { JvmtiError::InvalidTypestate }
-            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_HIERARCHY_CHANGED => { JvmtiError::UnsupportedRedefinitionHierarchyChanged }
-            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_METHOD_DELETED => { JvmtiError::UnsupportedRedefinitionMethodDeleted }
-            jvmtiError::JVMTI_ERROR_UNSUPPORTED_VERSION => { JvmtiError::UnsupportedVersion }
-            jvmtiError::JVMTI_ERROR_NAMES_DONT_MATCH => { JvmtiError::NamesDontMatch }
-            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_CLASS_MODIFIERS_CHANGED => { JvmtiError::UnsupportedRedefinitionClassModifiersChanged }
-            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_METHOD_MODIFIERS_CHANGED => { JvmtiError::UnsupportedRedefinitionMethodModifiersChanged }
-            jvmtiError::JVMTI_ERROR_UNMODIFIABLE_CLASS => { JvmtiError::UnmodifiableClass }
-            jvmtiError::JVMTI_ERROR_NOT_AVAILABLE => { JvmtiError::NotAvailable }
-            jvmtiError::JVMTI_ERROR_MUST_POSSESS_CAPABILITY => { JvmtiError::MustPossessCapability }
-            jvmtiError::JVMTI_ERROR_NULL_POINTER => { JvmtiError::NullPointer }
-            jvmtiError::JVMTI_ERROR_ABSENT_INFORMATION => { JvmtiError::AbsentInformation }
-            jvmtiError::JVMTI_ERROR_INVALID_EVENT_TYPE => { JvmtiError::InvalidEventType }
-            jvmtiError::JVMTI_ERROR_ILLEGAL_ARGUMENT => { JvmtiError::IllegalArgument }
-            jvmtiError::JVMTI_ERROR_NATIVE_METHOD => { JvmtiError::NativeMethod }
-            jvmtiError::JVMTI_ERROR_CLASS_LOADER_UNSUPPORTED => { JvmtiError::ClassLoaderUnsupported }
-            jvmtiError::JVMTI_ERROR_OUT_OF_MEMORY => { JvmtiError::OutOfMemory }
-            jvmtiError::JVMTI_ERROR_ACCESS_DENIED => { JvmtiError::AccessDenied }
-            jvmtiError::JVMTI_ERROR_WRONG_PHASE => { JvmtiError::WrongPhase }
-            jvmtiError::JVMTI_ERROR_INTERNAL => { JvmtiError::Internal }
-            jvmtiError::JVMTI_ERROR_UNATTACHED_THREAD => { JvmtiError::UnattachedThread }
-            jvmtiError::JVMTI_ERROR_INVALID_ENVIRONMENT => { JvmtiError::InvalidEnvironment }
+            jvmtiError::JVMTI_ERROR_NONE => {
+                panic!("This should not happen!")
+            }
+            jvmtiError::JVMTI_ERROR_INVALID_THREAD => JvmtiError::InvalidThread,
+            jvmtiError::JVMTI_ERROR_INVALID_THREAD_GROUP => JvmtiError::InvalidThreadGroup,
+            jvmtiError::JVMTI_ERROR_INVALID_PRIORITY => JvmtiError::InvalidPriority,
+            jvmtiError::JVMTI_ERROR_THREAD_NOT_SUSPENDED => JvmtiError::ThreadNotSuspended,
+            jvmtiError::JVMTI_ERROR_THREAD_SUSPENDED => JvmtiError::ThreadSuspended,
+            jvmtiError::JVMTI_ERROR_THREAD_NOT_ALIVE => JvmtiError::ThreadNotAlive,
+            jvmtiError::JVMTI_ERROR_INVALID_OBJECT => JvmtiError::InvalidObject,
+            jvmtiError::JVMTI_ERROR_INVALID_CLASS => JvmtiError::InvalidClass,
+            jvmtiError::JVMTI_ERROR_CLASS_NOT_PREPARED => JvmtiError::ClassNotPrepared,
+            jvmtiError::JVMTI_ERROR_INVALID_METHODID => JvmtiError::InvalidMethodid,
+            jvmtiError::JVMTI_ERROR_INVALID_LOCATION => JvmtiError::InvalidLocation,
+            jvmtiError::JVMTI_ERROR_INVALID_FIELDID => JvmtiError::InvalidFieldid,
+            jvmtiError::JVMTI_ERROR_NO_MORE_FRAMES => JvmtiError::NoMoreFrames,
+            jvmtiError::JVMTI_ERROR_OPAQUE_FRAME => JvmtiError::OpaqueFrame,
+            jvmtiError::JVMTI_ERROR_TYPE_MISMATCH => JvmtiError::TypeMismatch,
+            jvmtiError::JVMTI_ERROR_INVALID_SLOT => JvmtiError::InvalidSlot,
+            jvmtiError::JVMTI_ERROR_DUPLICATE => JvmtiError::Duplicate,
+            jvmtiError::JVMTI_ERROR_NOT_FOUND => JvmtiError::NotFound,
+            jvmtiError::JVMTI_ERROR_INVALID_MONITOR => JvmtiError::InvalidMonitor,
+            jvmtiError::JVMTI_ERROR_NOT_MONITOR_OWNER => JvmtiError::NotMonitorOwner,
+            jvmtiError::JVMTI_ERROR_INTERRUPT => JvmtiError::Interrupt,
+            jvmtiError::JVMTI_ERROR_INVALID_CLASS_FORMAT => JvmtiError::InvalidClassFormat,
+            jvmtiError::JVMTI_ERROR_CIRCULAR_CLASS_DEFINITION => {
+                JvmtiError::CircularClassDefinition
+            }
+            jvmtiError::JVMTI_ERROR_FAILS_VERIFICATION => JvmtiError::FailsVerification,
+            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_METHOD_ADDED => {
+                JvmtiError::UnsupportedRedefinitionMethodAdded
+            }
+            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_SCHEMA_CHANGED => {
+                JvmtiError::UnsupportedRedefinitionSchemaChanged
+            }
+            jvmtiError::JVMTI_ERROR_INVALID_TYPESTATE => JvmtiError::InvalidTypestate,
+            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_HIERARCHY_CHANGED => {
+                JvmtiError::UnsupportedRedefinitionHierarchyChanged
+            }
+            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_METHOD_DELETED => {
+                JvmtiError::UnsupportedRedefinitionMethodDeleted
+            }
+            jvmtiError::JVMTI_ERROR_UNSUPPORTED_VERSION => JvmtiError::UnsupportedVersion,
+            jvmtiError::JVMTI_ERROR_NAMES_DONT_MATCH => JvmtiError::NamesDontMatch,
+            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_CLASS_MODIFIERS_CHANGED => {
+                JvmtiError::UnsupportedRedefinitionClassModifiersChanged
+            }
+            jvmtiError::JVMTI_ERROR_UNSUPPORTED_REDEFINITION_METHOD_MODIFIERS_CHANGED => {
+                JvmtiError::UnsupportedRedefinitionMethodModifiersChanged
+            }
+            jvmtiError::JVMTI_ERROR_UNMODIFIABLE_CLASS => JvmtiError::UnmodifiableClass,
+            jvmtiError::JVMTI_ERROR_NOT_AVAILABLE => JvmtiError::NotAvailable,
+            jvmtiError::JVMTI_ERROR_MUST_POSSESS_CAPABILITY => JvmtiError::MustPossessCapability,
+            jvmtiError::JVMTI_ERROR_NULL_POINTER => JvmtiError::NullPointer,
+            jvmtiError::JVMTI_ERROR_ABSENT_INFORMATION => JvmtiError::AbsentInformation,
+            jvmtiError::JVMTI_ERROR_INVALID_EVENT_TYPE => JvmtiError::InvalidEventType,
+            jvmtiError::JVMTI_ERROR_ILLEGAL_ARGUMENT => JvmtiError::IllegalArgument,
+            jvmtiError::JVMTI_ERROR_NATIVE_METHOD => JvmtiError::NativeMethod,
+            jvmtiError::JVMTI_ERROR_CLASS_LOADER_UNSUPPORTED => JvmtiError::ClassLoaderUnsupported,
+            jvmtiError::JVMTI_ERROR_OUT_OF_MEMORY => JvmtiError::OutOfMemory,
+            jvmtiError::JVMTI_ERROR_ACCESS_DENIED => JvmtiError::AccessDenied,
+            jvmtiError::JVMTI_ERROR_WRONG_PHASE => JvmtiError::WrongPhase,
+            jvmtiError::JVMTI_ERROR_INTERNAL => JvmtiError::Internal,
+            jvmtiError::JVMTI_ERROR_UNATTACHED_THREAD => JvmtiError::UnattachedThread,
+            jvmtiError::JVMTI_ERROR_INVALID_ENVIRONMENT => JvmtiError::InvalidEnvironment,
         }
     }
 }

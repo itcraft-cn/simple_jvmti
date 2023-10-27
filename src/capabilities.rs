@@ -1,6 +1,6 @@
 #![allow(non_snake_case, non_camel_case_types, dead_code)]
 
-use crate::{jvmti_sys::jvmtiCapabilities, errors::JvmtiError};
+use crate::{errors::JvmtiError, jvmti_sys::jvmtiCapabilities};
 
 pub const CAN_TAG_OBJECTS: usize = 0;
 pub const CAN_GENERATE_FIELD_MODIFICATION_EVENTS: usize = 1;
@@ -47,7 +47,7 @@ pub const CAN_GENERATE_EARLY_VMSTART: usize = 41;
 pub const CAN_GENERATE_EARLY_CLASS_HOOK_EVENTS: usize = 42;
 pub const CAN_GENERATE_SAMPLED_OBJECT_ALLOC_EVENTS: usize = 43;
 
-pub fn set_capability(capabilities: &mut jvmtiCapabilities, idx: usize) -> Result<(),JvmtiError> {
+pub fn set_capability(capabilities: &mut jvmtiCapabilities, idx: usize) -> Result<(), JvmtiError> {
     let n = idx / 32;
     let bit = idx & 31;
     match n {
@@ -59,8 +59,6 @@ pub fn set_capability(capabilities: &mut jvmtiCapabilities, idx: usize) -> Resul
             capabilities._bindgen_bitfield_2_ |= 1 << bit;
             Ok(())
         }
-        _ => {
-            Err(JvmtiError::NotAvailable)
-        }
+        _ => Err(JvmtiError::NotAvailable),
     }
 }
