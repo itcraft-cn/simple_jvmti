@@ -6,3 +6,12 @@
 
 第一次提交是从 [jvmti_wrapper](https://docs.rs/crate/jvmti_wrapper/latest/source/) 和 [jvmti_sys](https://docs.rs/crate/jvmti_sys/latest/source/) 复制的代码。
 
+## 改进
+
+我修改了代码，适应 `Rust 2021`。
+
+## 问题
+
+欢迎，如果您发现问题，请在这里 [issues](https://github.com/itcraft-cn/simple-jvmti/issues) 发帖。
+
+谢谢！

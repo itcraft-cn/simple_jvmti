@@ -3,6 +3,7 @@
 use crate::{errors::*, jvmti_sys::*};
 use jni::sys::*;
 use std::ffi::CString;
+use std::mem::size_of;
 use std::os::raw::{c_char, c_uchar, c_void};
 use std::{mem, ptr};
 
@@ -16,8 +17,12 @@ macro_rules! jvmti_unchecked {
 
 fn to_string(ptr: *mut c_char) -> String {
     unsafe {
-        let c_str = CString::from_raw(ptr);
-        String::from(c_str.to_str().unwrap())
+        if ptr.is_null() {
+            String::new()
+        } else {
+            let c_str = CString::from_raw(ptr);
+            String::from(c_str.to_str().unwrap())
+        }
     }
 }
 
@@ -32,7 +37,7 @@ fn as_vec<T>(count: i32, ptr: *mut T) -> Vec<T> {
 fn as_c_char(name: &str) -> *const c_char {
     let c_str = CString::new(name).unwrap();
 
-    return c_str.as_ptr();
+    c_str.as_ptr()
 }
 
 fn none<T>() -> T {
@@ -701,7 +706,7 @@ impl JvmtiEnv {
 
     pub fn get_capabilities(&self) -> JvmtiResult<jvmtiCapabilities> {
         let mut capabilities: jvmtiCapabilities = none();
-        let capabilities_ptr: *mut jvmtiCapabilities = &mut capabilities;
+        let capabilities_ptr = ptr::addr_of_mut!(capabilities);
 
         jvmti_unchecked!(self, GetCapabilities, capabilities_ptr).value(|| capabilities)
     }
@@ -972,11 +977,11 @@ impl JvmtiEnv {
         jvmti_unchecked!(self, GetJNIFunctionTable, function_table_ptr).value(|| function_table)
     }
 
-    pub fn set_event_callbacks(&self, callbacks: Vec<jvmtiEventCallbacks>) -> JvmtiResult<()> {
-        let count = callbacks.len() as i32;
-        let ptr = callbacks.as_ptr();
+    pub fn set_event_callbacks(&self, callbacks: jvmtiEventCallbacks) -> JvmtiResult<()> {
+        let size = size_of::<jvmtiEventCallbacks>() as i32;
+        let ptr = ptr::addr_of!(callbacks);
 
-        jvmti_unchecked!(self, SetEventCallbacks, ptr, count).value(|| ())
+        jvmti_unchecked!(self, SetEventCallbacks, ptr, size).value(|| ())
     }
 
     pub fn generate_events(&self, event_type: jvmtiEvent) -> JvmtiResult<()> {
@@ -1110,19 +1115,19 @@ impl JvmtiEnv {
 
     pub fn get_potential_capabilities(&self) -> JvmtiResult<jvmtiCapabilities> {
         let mut capabilities: jvmtiCapabilities = none();
-        let capabilities_ptr: *mut jvmtiCapabilities = &mut capabilities;
+        let capabilities_ptr = ptr::addr_of_mut!(capabilities);
 
         jvmti_unchecked!(self, GetPotentialCapabilities, capabilities_ptr).value(|| capabilities)
     }
 
     pub fn add_capabilities(&self, capabilities: jvmtiCapabilities) -> JvmtiResult<()> {
-        let ptr = vec![capabilities].as_ptr();
+        let ptr = ptr::addr_of!(capabilities);
 
         jvmti_unchecked!(self, AddCapabilities, ptr).value(|| ())
     }
 
     pub fn relinquish_capabilities(&self, capabilities: jvmtiCapabilities) -> JvmtiResult<()> {
-        let ptr = vec![capabilities].as_ptr();
+        let ptr = ptr::addr_of!(capabilities);
 
         jvmti_unchecked!(self, RelinquishCapabilities, ptr).value(|| ())
     }
@@ -1246,10 +1251,10 @@ trait ErrorOr {
 
 impl ErrorOr for jvmtiError {
     fn value<T, F: FnOnce() -> T>(&self, value: F) -> JvmtiResult<T> {
-        return if matches!(self, jvmtiError::JVMTI_ERROR_NONE) {
+        if matches!(self, jvmtiError::JVMTI_ERROR_NONE) {
             Ok(value())
         } else {
             Err(JvmtiError::from(self))
-        };
+        }
     }
 }

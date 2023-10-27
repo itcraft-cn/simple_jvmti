@@ -690,27 +690,27 @@ pub struct jvmtiHeapReferenceInfo {
 }
 impl jvmtiHeapReferenceInfo {
     pub unsafe fn field(&mut self) -> *mut jvmtiHeapReferenceInfoField {
-        let raw: *mut u8 = mem::transmute(&self._bindgen_data_);
+        let raw: *mut u8 = &self._bindgen_data_ as *const [u64; 8] as *mut u8;
         mem::transmute(raw.offset(0))
     }
     pub unsafe fn array(&mut self) -> *mut jvmtiHeapReferenceInfoArray {
-        let raw: *mut u8 = mem::transmute(&self._bindgen_data_);
+        let raw: *mut u8 = &self._bindgen_data_ as *const [u64; 8] as *mut u8;
         mem::transmute(raw.offset(0))
     }
     pub unsafe fn constant_pool(&mut self) -> *mut jvmtiHeapReferenceInfoConstantPool {
-        let raw: *mut u8 = mem::transmute(&self._bindgen_data_);
+        let raw: *mut u8 = &self._bindgen_data_ as *const [u64; 8] as *mut u8;
         mem::transmute(raw.offset(0))
     }
     pub unsafe fn stack_local(&mut self) -> *mut jvmtiHeapReferenceInfoStackLocal {
-        let raw: *mut u8 = mem::transmute(&self._bindgen_data_);
+        let raw: *mut u8 = &self._bindgen_data_ as *const [u64; 8] as *mut u8;
         mem::transmute(raw.offset(0))
     }
     pub unsafe fn jni_local(&mut self) -> *mut jvmtiHeapReferenceInfoJniLocal {
-        let raw: *mut u8 = mem::transmute(&self._bindgen_data_);
+        let raw: *mut u8 = &self._bindgen_data_ as *const [u64; 8] as *mut u8;
         mem::transmute(raw.offset(0))
     }
     pub unsafe fn other(&mut self) -> *mut jvmtiHeapReferenceInfoReserved {
-        let raw: *mut u8 = mem::transmute(&self._bindgen_data_);
+        let raw: *mut u8 = &self._bindgen_data_ as *const [u64; 8] as *mut u8;
         mem::transmute(raw.offset(0))
     }
 }
